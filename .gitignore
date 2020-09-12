@@ -1,0 +1,7 @@
+/venv
+.idea
+/website/.env
+/website/__pycache__
+/website/application/__pycache__
+
+
