@@ -60,3 +60,6 @@ def logout():
     flash("You were logged out")
     return redirect(url_for("views.login"))
     # return render_template("login.html")
+
+
+# jsonify takes a python dictionary and returns a JSON object

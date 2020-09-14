@@ -3,5 +3,12 @@
 {% block title %}HomePage{% endblock %}
 
 {% block content %}
-<h1>Welcome to the HomePage</h1>
+<h1>Welcome to the Chat Interface</h1>
+
+<div class="input-group mb-3">
+  <input type="text" class="form-control" placeholder="Send Message" aria-label="Recipient's username" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" id="sendButton" type="button">Send</button>
+  </div>
+</div>
 {% endblock %}
