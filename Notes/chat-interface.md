@@ -1,6 +1,6 @@
 # Creating the chat interface
 
-## Bootstrap a chat window
+## Bootstrap a Send input 
 
 - We took a text window from bootstrap which had a send button to which the user could send the message
 
@@ -11,4 +11,10 @@
     <button class="btn btn-outline-secondary" type="button">Button</button>
   </div>
 </div>
+```
+
+## Bootstrap a chat window
+
+```html
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='index.css') }}">
 ```

@@ -70,4 +70,13 @@ def send_message():
     pass
 
 
+@view.route("/get_name")
+def get_name():
+    info = {"name": ""}
+    if NAME_KEY in session:
+        info = {"name": session[NAME_KEY]}
+    # We must now convert the python dictionary to a JSON object so that JavaScript can understand it
+    return jsonify(info)
+
+
 # jsonify takes a python dictionary and returns a JSON object

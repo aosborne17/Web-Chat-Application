@@ -5,10 +5,13 @@
 {% block content %}
 <h1>Welcome to the Chat Interface</h1>
 
+<div class="container" id="container">
+
+</div>
 <div class="input-group mb-3">
   <input type="text" class="form-control" placeholder="Send Message" aria-label="Message" id="msg">
   <div class="input-group-append">
-    <button class="btn btn-outline-secondary" id="sendBtn" type="button">Send</button>
+    <button class="btn btn-outline-secondary" id="sendBtn" type="button" onClick="show_message()">Send</button>
   </div>
 </div>
 {% endblock %}
