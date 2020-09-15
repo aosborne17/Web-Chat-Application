@@ -31,6 +31,9 @@ def home():
     return render_template('index.html', **{"session": session})
 
 
+
+
+
 @view.route('/login', methods=["POST", "GET"])
 def login():
     """

@@ -48,6 +48,11 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
 
 # Running the application
 
+@app.route("/run")
+def run():
+    print("Clicked")
+    return "Nothing"
+
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, host=str(config.Config.SERVER))
