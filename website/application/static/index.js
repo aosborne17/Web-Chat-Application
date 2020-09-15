@@ -21,54 +21,30 @@
 //          });
 //        });
 
+async function add_messages(msg, scroll){
+  if( typeof msg.name !== 'undefined' ) {
+    var date = dateNow()
 
-// Find out where this message is coming from
-async function show_message(msg, scroll) {
-//    $('#sendBtn').bind('click', function() {
-            var value = document.getElementById("msg").value;
-            var users_name = await load_name()
-            var today = new Date();
-            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    if ( typeof msg.time !== "undefined") {
+      var n = msg.time
+    }else{
+      var n = date
+    }
+    var global_name = await load_name()
 
-            var content = '<div class="container">' + '<b style="color:#000" class="right">'+msg.name+'</b><p>' + msg.message +'</p><span class="time-right">' + time + '</span></div>'
-            if (users_name == msg.name){
-               content = '<div class="container darker">' + '<b style="color:#000" class="left">'+msg.name+'</b><p>' + msg.message +'</p><span class="time-left">' + time + '</span></div>'
-            }
-            var div = document.getElementById('messages')
-            div.innerHTML += content;
-            }
+    var content = '<div class="container">' + '<b style="color:#000" class="right">'+msg.name+'</b><p>' + msg.message +'</p><span class="time-right">' + n + '</span></div>'
+    if (global_name == msg.name){
+      content = '<div class="container darker">' + '<b style="color:#000" class="left">'+msg.name+'</b><p>' + msg.message +'</p><span class="time-left">' + n + '</span></div>'
+    }
+    // update div
+    var messageDiv = document.getElementById("messages")
+    messageDiv.innerHTML += content
+  }
 
-            if (scroll){
+  if (scroll){
     scrollSmoothToBottom("messages");
+  }
 }
-
-
-/////////////////////////////////////////////////////////////////////
-//async function add_messages(msg, scroll){
-////    $('#sendBtn').bind('click', function() {
-//    var value = document.getElementById("msg").value;
-//    var users_name = await load_name()
-//    var today = new Date();
-//    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-//
-//     var content = '<div class="container">' + '<b style="color:#000" class="right">'+users_name+'</b><p>' + msg.message +'</p><span class="time-right">' + time + '</span></div>'
-//     if (users_name == msg.name){
-//        content = '<div class="container darker">' + '<b style="color:#000" class="left">'+users_name+'</b><p>' + msg.message +'</p><span class="time-left">' + time + '</span></div>'
-//     }
-//     var div = document.getElementById('messages')
-//     div.innerHTML += content;
-//     }
-//
-//  if (scroll){
-//    scrollSmoothToBottom("messages");
-//  }
-
-
-
-
-
-
-
 
 
 async function load_name(){
@@ -91,6 +67,7 @@ async function load_messages() {
   });
 }
 
+
 $(function()
 {
   $('.msgs') .css({'height': (($(window).height()) * 0.7)+'px'});
@@ -107,6 +84,38 @@ function scrollSmoothToBottom (id) {
     scrollTop: div.scrollHeight - div.clientHeight
  }, 500);
 }
+
+
+function dateNow() {
+  var date = new Date();
+  var aaaa = date.getFullYear();
+  var gg = date.getDate();
+  var mm = (date.getMonth() + 1);
+
+  if (gg < 10)
+      gg = "0" + gg;
+
+  if (mm < 10)
+      mm = "0" + mm;
+
+  var cur_day = aaaa + "-" + mm + "-" + gg;
+
+  var hours = date.getHours()
+  var minutes = date.getMinutes()
+  var seconds = date.getSeconds();
+
+  if (hours < 10)
+      hours = "0" + hours;
+
+  if (minutes < 10)
+      minutes = "0" + minutes;
+
+  if (seconds < 10)
+      seconds = "0" + seconds;
+
+  return cur_day + " " + hours + ":" + minutes;
+}
+
 
 var socket = io.connect('http://' + document.domain + ':' + location.port);
   socket.on( 'connect', async function() {
@@ -135,10 +144,14 @@ var socket = io.connect('http://' + document.domain + ':' + location.port);
       } )
     } )
   } )
-
-
+  /*socket.on( 'disconnect', async function( msg ) {
+      var usr_name = await load_name()
+      socket.emit( 'event', {
+      message: usr_name + ' just left the server...',
+    } )
+  })*/
   socket.on( 'message response', function( msg ) {
-    show_message(msg, true)
+    add_messages(msg, true)
   })
 
 window.onload = async function() {
@@ -146,11 +159,9 @@ window.onload = async function() {
   for (i = 0; i < msgs.length; i++){
     scroll = false
     if (i == msgs.length-1) {scroll = true}
-    show_message(msgs[i], scroll)
+    add_messages(msgs[i], scroll)
   }
 
-// If we are logged in we will only be shown the logout option and visa versa
-// .hide() is a helpful jquery function
   let name = await load_name()
   if (name != ""){
     $("#login").hide();
