@@ -65,4 +65,9 @@ def logout():
     # return render_template("login.html")
 
 
+@view.route('/send_message')
+def send_message():
+    pass
+
+
 # jsonify takes a python dictionary and returns a JSON object

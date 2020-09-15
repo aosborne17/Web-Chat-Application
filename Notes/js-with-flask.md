@@ -1,5 +1,8 @@
 # Javascript With Flask
 
+Remember the difference between POST and GET. 
+When you POST mail, you head to the post office with your letter filled with information. 
+When you GET mail, you head to the post office again but this time you’re picking up something that’s been left for you.
 
 ## Ajax
 
@@ -17,7 +20,8 @@
 
 ```
 $(function() {
-          // here we are binding the id of a html element 
+          // here we are binding the id of a html element
+          // Note that the "#" sign means jquery will look for an element id = to what is specified
           $('#sendBtn').bind('click', function() {
           // When the button is clicked, it will run a function specified in our python files
             $.getJSON('/run',
@@ -42,5 +46,13 @@ def run():
 
 ![](/images/clicked-showing-in-terminal.png)
 
+
+### Now we can create a function
+
+
+## Updating the div
+
+- We want to be able to append the message send by the user and show it on the webpage, without erasing the
+webpage completely 
 
 ## Jquery
