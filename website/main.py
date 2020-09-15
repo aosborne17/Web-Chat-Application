@@ -48,6 +48,7 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
 
 # Running the application
 
+
 @app.route("/run")
 def run():
     print("Clicked")

@@ -65,9 +65,15 @@ def logout():
     # return render_template("login.html")
 
 
-@view.route('/send_message')
-def send_message():
-    pass
+@view.route('/get_messages')
+def get_messages():
+    """
+
+    :return: Returns object of all the messages in the database
+    """
+    db = Database()
+    messages = db.get_messages()
+    return jsonify(messages)
 
 
 @view.route("/get_name")

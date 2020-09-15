@@ -9,12 +9,9 @@ FILE = 'messages.db'
 MY_TABLE = 'Messages'
 
 
-
-
-
 class Database:
     """
-    From this class we will read and write to our database and display it on our web server using quieres where necessary
+    From this class we will read and write to our database and display it on our web server using queries where necessary
     """
     # The init method is called when memory for the object is calculated, thus this is when we will establish a connection
     def __init__(self):
@@ -29,7 +26,7 @@ class Database:
         self.cursor = self.conn.cursor()
         # every time we initialise this database, it will call the function specified below
         # If that table doesn't exist, it will be created
-        self._create_table()
+        self.create_table()
 
     def create_table(self):
         """
@@ -37,7 +34,7 @@ class Database:
         :return: None
         """
         query = f"""CREATE TABLE IF NOT EXISTS {MY_TABLE}
-                    (name TEXT, content, TEXT, time Date, id INTEGER PRIMARY KEY AUTOINCREMENT)"""
+                    (name TEXT, content TEXT, time Date, id INTEGER PRIMARY KEY AUTOINCREMENT)"""
         # now we must execute this query using the cursor
         self.cursor.execute(query)
         # We then commit those changes to the database
@@ -63,4 +60,24 @@ class Database:
         # We are specifying the params to go in the execute
         self.cursor.execute(query, (name, msg, datetime.now(), None))
         self.conn.commit()
+
+    def get_messages(self, limit=100):
+        """
+
+        :param limit: Int
+        :return: None
+        """
+        query = f"SELECT * FROM {MY_TABLE}"
+        self.cursor.execute(query)
+
+        result = self.cursor.fetchall()
+
+        results = []
+        for r in sorted(result, key=lambda x: x[3], reverse=True)[:limit]:
+            name, content, date, _id = r
+            data = {"name": name, "message": content, "time": str(date)}
+            results.append(data)
+
+        return list(reversed(results))
+
 
